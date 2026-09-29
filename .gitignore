@@ -1,0 +1,46 @@
+# Maven
+**/target/
+!.mvn/wrapper/maven-wrapper.jar
+aggregator-service/HELP.md
+
+# Java
+*.class
+
+# IntelliJ IDEA
+**/.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse / STS
+.apt_generated/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+
+# NetBeans
+**/nbproject/private/
+**/nbbuild/
+**/dist/
+**/nbdist/
+**/.nb-gradle/
+
+# VS Code and editor history
+**/.vscode/
+**/.history/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Kotlin tooling
+.kotlin/

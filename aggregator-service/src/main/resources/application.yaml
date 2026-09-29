@@ -1,0 +1,56 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: aggregator-service
+  threads:
+    virtual:
+      enabled: true
+
+# Upstream addresses configuration (targets mock-server on port 8081)
+app:
+  upstream:
+    base-url: ${APP_UPSTREAM_BASE_URL:http://localhost:8081/api/v1/upstream}
+    http:
+      connect-timeout: ${APP_UPSTREAM_CONNECT_TIMEOUT:200ms}
+      read-timeout: ${APP_UPSTREAM_READ_TIMEOUT:300ms}
+    catalog:
+      url: ${app.upstream.base-url}
+    pricing:
+      url: ${app.upstream.base-url}
+    stock-availability:
+      url: ${app.upstream.base-url}
+    customer:
+      url: ${app.upstream.base-url}
+
+resilience4j:
+  # Circuit Breaker configuration - prevents overloading during failures
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 20
+        minimumNumberOfCalls: 10
+        permittedNumberOfCallsInHalfOpenState: 5
+        waitDurationInOpenState: 5s
+        failureRateThreshold: 50
+        recordExceptions:
+          - com.kramp.assignment.aggregator.domain.exception.CatalogServiceUnavailableException
+          - org.springframework.web.client.RestClientException
+        ignoreExceptions:
+          - com.kramp.assignment.aggregator.domain.exception.ProductNotFoundException
+    instances:
+      productCatalog:
+        baseConfig: default
+      productPricing:
+        baseConfig: default
+      stockAvailability:
+        baseConfig: default
+      customerProfiles:
+        baseConfig: default
+
+# Logging configuration (optional, useful for debugging RestClient and Resilience4j)
+logging:
+  level:
+    com.kramp.assignment.aggregator: DEBUG
+    io.github.resilience4j: INFO
