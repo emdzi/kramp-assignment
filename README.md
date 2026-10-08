@@ -21,13 +21,13 @@ You do not need Docker. You only need JDK 21; the Maven Wrapper will download th
 In the first terminal, start the mock server:
 
 ```shell
-.\aggregator-service\mvnw.cmd -f pom.xml -pl mock-server spring-boot:run
+.\aggregator-service\mvnw.cmd -f .\pom.xml -pl mock-server spring-boot:run
 ```
 
 In the second terminal, start the aggregator:
 
 ```shell
-.\aggregator-service\mvnw.cmd -f pom.xml -pl aggregator-service spring-boot:run
+.\aggregator-service\mvnw.cmd -f .\pom.xml -pl aggregator-service spring-boot:run
 ```
 
 By default, the aggregator connects to the mock server at `localhost:8081` and listens on port `8080`. The application runs with the `--enable-preview` flag, which is required by the Java 21 preview API `StructuredTaskScope`. The Maven and container configuration already set this flag.
